@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="crescentModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Document">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DocID" Type="nvarchar" MaxLength="200" />
+          <Property Name="DocDate" Type="datetime" />
+          <Property Name="Source" Type="nvarchar" MaxLength="200" />
+          <Property Name="Content" Type="nvarchar(max)" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="200" />
+          <Property Name="Misc" Type="nvarchar" MaxLength="200" />
+          <Property Name="Person" Type="nvarchar" MaxLength="200" />
+          <Property Name="Location" Type="nvarchar" MaxLength="200" />
+          <Property Name="Organisation" Type="nvarchar" MaxLength="200" />
+          <Property Name="Money" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="lookUp_Master">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Level1ID" Type="int" />
+          <Property Name="Level2ID" Type="int" />
+          <Property Name="NameOflookUp" Type="nvarchar" MaxLength="200" />
+          <Property Name="IsActive" Type="int" />
+        </EntityType>
+        <EntityType Name="UserDetails">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="200" />
+          <Property Name="MiddleName" Type="nvarchar" MaxLength="200" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="200" />
+          <Property Name="LoginID" Type="nvarchar" MaxLength="200" />
+          <Property Name="Password" Type="nvarchar" MaxLength="200" />
+          <Property Name="UserType" Type="nvarchar" MaxLength="200" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="IsActive" Type="int" />
+        </EntityType>
+        <EntityContainer Name="crescentModelStoreContainer">
+          <EntitySet Name="Document" EntityType="Self.Document" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="lookUp_Master" EntityType="Self.lookUp_Master" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserDetails" EntityType="Self.UserDetails" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="crescentModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="lookUp_Master">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Level1ID" Type="Int32" />
+          <Property Name="Level2ID" Type="Int32" />
+          <Property Name="NameOflookUp" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Int32" />
+        </EntityType>
+        <EntityType Name="UserDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="MiddleName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="LoginID" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="UserType" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="IsActive" Type="Int32" />
+        </EntityType>
+        <EntityContainer Name="crescentEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="lookUp_Master" EntityType="Self.lookUp_Master" />
+          <EntitySet Name="UserDetails" EntityType="Self.UserDetail" />
+          <EntitySet Name="Documents" EntityType="crescentModel.Document" />
+        </EntityContainer>
+        <EntityType Name="Document">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DocID" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DocDate" Type="DateTime" Precision="3" />
+          <Property Name="Source" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Misc" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Person" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Location" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Organisation" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Money" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="crescentModelStoreContainer" CdmEntityContainer="crescentEntities">
+          <EntitySetMapping Name="lookUp_Master">
+            <EntityTypeMapping TypeName="crescentModel.lookUp_Master">
+              <MappingFragment StoreEntitySet="lookUp_Master">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Level1ID" ColumnName="Level1ID" />
+                <ScalarProperty Name="Level2ID" ColumnName="Level2ID" />
+                <ScalarProperty Name="NameOflookUp" ColumnName="NameOflookUp" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserDetails">
+            <EntityTypeMapping TypeName="crescentModel.UserDetail">
+              <MappingFragment StoreEntitySet="UserDetails">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="LoginID" ColumnName="LoginID" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserType" ColumnName="UserType" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Documents">
+            <EntityTypeMapping TypeName="crescentModel.Document">
+              <MappingFragment StoreEntitySet="Document">
+                <ScalarProperty Name="Money" ColumnName="Money" />
+                <ScalarProperty Name="Organisation" ColumnName="Organisation" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="Person" ColumnName="Person" />
+                <ScalarProperty Name="Misc" ColumnName="Misc" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="Source" ColumnName="Source" />
+                <ScalarProperty Name="DocDate" ColumnName="DocDate" />
+                <ScalarProperty Name="DocID" ColumnName="DocID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

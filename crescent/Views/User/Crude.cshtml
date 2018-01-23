@@ -1,0 +1,258 @@
+﻿
+<script src="~/Scripts/angular.min.js"></script>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<link href="~/css/RegisterLogin.css" rel="stylesheet" />
+<script src="~/Scripts/RegisterModel.js"></script>
+<script src="~/Scripts/dirPagination.js"></script>
+
+<script src="~/Scripts/UserController.js"></script>
+
+@*Style*@
+<style>
+    .btn-space {
+        margin-left: -5%;
+        background-color: cornflowerblue;
+        font-size: large;
+    }
+
+    .btn-spaceCancel {
+        margin-left: -5%;
+        background-color: #E11111;
+        font-size: large;
+        color: white;
+    }
+
+    .btn-spaceReset {
+        margin-left: -5%;
+        background-color: #F4511E;
+        font-size: large;
+        color: white;
+    }
+</style>
+
+<div ng-app="UserReg" ng-controller="UserController">
+    <br />
+    <div style="float:right;">
+        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" ng-show="BoolVal">+ New Doc</button> &nbsp;
+        <button id="btnLogin" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModalLogin">Login</button>
+        <button id="btnLogout" type="button" class="btn btn-info btn-lg" ng-click="Logout()">Logout</button>
+    </div>
+    <p class="divHead" style="font-size:larger"> <b> Document List View</b></p>
+    <form class="form-inline">
+        <div class="form-group">
+           <label>Search</label>   @*Search*@
+            <input type="text" ng-model="search" class="form-control" placeholder="Search">
+        </div>
+    </form>
+
+    <div class="divList">
+        <br />
+        <table cellpadding="12" class="table table-bordered table-hover" ng-init="GetAllData()">
+            <tr>
+                <th ng-show="false">ID</th>
+                <th>Sr. No</th>
+                <th ng-click="sort('DocID')">
+
+                    Doc ID
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='DocID'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+
+                <th ng-click="sort('Date')">
+                    Date
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='Date'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+
+                <th ng-click="sort('Source')">
+                    Source
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='Source'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+
+                <th ng-click="sort('Content')">
+                    Content
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='Content'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+
+                <th ng-click="sort('Phone')">
+                    Phone
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='Phone'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+
+                <th ng-click="sort('Misc')">
+                    Misc
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='Misc'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+
+                <th ng-click="sort('Person')">
+                    Person
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='Person'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+
+                <th ng-click="sort('Location')">
+                    Location
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='Location'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+
+                <th ng-click="sort('Organisation')">
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='Organisation'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                    Organisation
+                </th>
+
+                <th ng-click="sort('Money')">
+                    Money
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='Money'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+
+                <th ng-show="BoolVal">Action</th>
+            </tr>
+
+            @*Pagination*@
+            <tr dir-paginate="CrimData in employees|orderBy:sortKey:reverse|filter:search|itemsPerPage:10">      
+            <tr ng-repeat="CrimData in employees|orderBy:sortKey:reverse|filter:search">
+
+                <td ng-show="false">{{Crimdata.ID}}</td>
+                <td>{{$index+1}}</td>
+                <td>{{CrimData.DocID}}</td>
+                <td>{{CrimData.Date}}</td>
+                <td>{{CrimData.Source}}</td>
+                <td style="max-width:40%; white-space:unset;">{{CrimData.Content}}</td>
+                <td>{{CrimData.Phone}}</td>
+                <td>{{CrimData.Misc}}</td>
+                <td>{{CrimData.Person}}</td>
+                <td>{{CrimData.Location}}</td>
+                <td>{{CrimData.Organisation}}</td>
+                <td>{{CrimData.Money}}</td>
+                <td style="white-space:nowrap;" ng-show="BoolVal">
+
+                    <input type="button" class="btn btn-warning Action" value="Update" data-toggle="modal" data-target="#myModal" ng-click="EditData(CrimData)" />
+                    <input type="button" class="btn btn-danger Action" value="Delete" ng-click="askForDelete(CrimData)" />
+                </td>
+
+            </tr>
+            
+        </table>
+
+        <dir-pagination-controls max-size="10" direction-links="true" boundry-links="true">
+            
+        </dir-pagination-controls>
+
+      </div>
+    
+    <br/>
+
+    <input type="text" ng-show="false" id="IsActive" ng-model="filter" />
+
+    <div aria-hidden="true" id="myModal" class="modal fade" role="dialog" style="width:40%; margin-left:30%;overflow-x: auto; overflow-y:auto;">
+        <div class="modal-content">
+            <div>
+                <div class="row">
+                    <div style="padding:20px;">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                Enter Your Details Here
+                            </div>
+                            <form name="myform">
+                                <div class="panel-body">
+                                  <div class="form-group">
+                                    <label for="DocID">Doc ID</label>
+                                      <input id="DocID" name="DocID" class="form-control" type="text" value=""  required ng-model="Document.DocID">
+                                        <span id="error_DocID" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Source">Doc Source</label>
+                                        <input id="Source" name="Source" class="form-control" type="text" ng-model="Document.Source">
+                                        <span id="error_Source" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Phone">Phone</label>
+                                        <input type="number" name="Phone" id="Phone" class="form-control" ng-model="Document.Phone">
+                                        <span id="error_dob" class="text-danger"></span>
+                                    </div>
+                                 
+                                    <div class="form-group">
+                                        <label for="Misc">Misc</label>
+                                        <input type="text" id="Misc" name="Misc" class="form-control" ng-model="Document.Misc">
+                                        <span id="error_Misc" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Person">Person</label>
+                                        <input type="text" id="Person" name="Person" class="form-control" ng-model="Document.Person">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Location">Location</label>
+                                        <input type="text" id="Location" name="Location" class="form-control" ng-model="Document.Location">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Organisation">Organisation</label>
+                                        <input type="text" id="Organisation" name="Organisation" class="form-control" ng-model="Document.Organisation">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Money">Money</label>
+                                        <input type="text" id="Money" name="Money" class="form-control" ng-model="Document.Money">
+                                    </div>
+                                    <div class="form-group">
+                                 
+                                        <label for="Content">Doc Content</label>
+                                        <textarea id="Content" name="Content" class="form-control" type="text" required rows="3" ng-model="Document.Content"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row setup-content" id="step-1">
+                                            <div class="col-xs-12">
+                                                <div class="col-md-12 well text-center">
+                                                    <label for="fileToUpload">Select a File to Upload</label><br />
+                                                    <input type="file" name="fileToUpload" id="fileToUpload" />
+                                                </div>
+                                                <div id="fileName"></div>
+                                                <div id="fileSize"></div>
+                                                <div id="fileType"></div>
+                                 
+                                                <div id="progressNumber"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button id="btnSave" type="submit" value="Submit" class="btn btn-primary center" ng-click="InsertData()">Submit</button>&nbsp;
+                                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="Close()">Close</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div aria-hidden="true" id="myModalLogin" class="modal fade" role="dialog" style="width:80%; margin-left:10%;overflow-y: auto; ">
+        
+        <!-- Modal content-->
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Login</h4>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h1 class="text-center login-title">Sign in Crminial Data Application</h1>
+                        <div class="account-wall">
+                            <img class="profile-img" src="~/images/photo.png" alt="">
+                            
+                            
+                            <form class="form-signin">
+                                <input id="username" type="text" class="form-control" ng-model="LoginData.LoginID" placeholder="Email or Username" required autofocus>&nbsp;
+                                <input id="pwd" type="password" class="form-control" ng-model="LoginData.Password" placeholder="Password" required>
+                                <button class="btn btn-lg btn-primary btn-block" type="submit" id="btnLoginSubmit" ng-click="Login(LoginData)">
+                                    Sign in
+                                </button>
+                          </form>
+                        </div>
+        
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
